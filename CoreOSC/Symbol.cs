@@ -19,7 +19,7 @@ namespace CoreOSC
 			this.Value = value;
 		}
 
-		public string ToString()
+		public override string ToString()
 		{
 			return Value;
 		}

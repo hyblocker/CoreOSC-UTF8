@@ -41,7 +41,7 @@ namespace CoreOSC.Tests
 				var isnull = l1.Receive();
 				var l2 = new UDPListener(55555);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				ex = true;
 			}
