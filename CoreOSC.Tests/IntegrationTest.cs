@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace SharpOSC.Tests
+namespace CoreOSC.Tests
 {
 	[TestFixture]
 	class IntegrationTest
@@ -14,10 +14,10 @@ namespace SharpOSC.Tests
 		{
 			var listener = new UDPListener(55555);
 
-			var sender = new SharpOSC.UDPSender("localhost", 55555);
+			var sender = new CoreOSC.UDPSender("localhost", 55555);
 
 			// Test every message type (except Symbol)
-			var msg1 = new SharpOSC.OscMessage(
+			var msg1 = new CoreOSC.OscMessage(
 				"/test/address", 
 
 				23, 
@@ -72,11 +72,11 @@ namespace SharpOSC.Tests
 		{
 			var listener = new UDPListener(55555);
 
-			var sender1 = new SharpOSC.UDPSender("localhost", 55555);
-			var msg1 = new SharpOSC.OscMessage("/test/address1", 23, 42.42f, "hello world", new byte[3] { 2, 3, 4 });
-			var msg2 = new SharpOSC.OscMessage("/test/address2", 34, 24.24f, "hello again", new byte[5] { 5, 6, 7, 8, 9 });
+			var sender1 = new CoreOSC.UDPSender("localhost", 55555);
+			var msg1 = new CoreOSC.OscMessage("/test/address1", 23, 42.42f, "hello world", new byte[3] { 2, 3, 4 });
+			var msg2 = new CoreOSC.OscMessage("/test/address2", 34, 24.24f, "hello again", new byte[5] { 5, 6, 7, 8, 9 });
 			var dt = DateTime.Now;
-			var bundle = new SharpOSC.OscBundle(Utils.DateTimeToTimetag(dt), msg1, msg2);
+			var bundle = new CoreOSC.OscBundle(Utils.DateTimeToTimetag(dt), msg1, msg2);
 			
 			sender1.Send(bundle);
 			sender1.Send(bundle);

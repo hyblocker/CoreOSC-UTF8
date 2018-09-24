@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using System.Threading;
 
-namespace SharpOSC.Tests
+namespace CoreOSC.Tests
 {
 	[TestFixture]
 	class CallbackTest
@@ -27,8 +27,8 @@ namespace SharpOSC.Tests
 
 			var l1 = new UDPListener(55555, cb);
 
-			var sender = new SharpOSC.UDPSender("localhost", 55555);
-			var msg1 = new SharpOSC.OscMessage("/test/address", 23, "hello world");
+			var sender = new CoreOSC.UDPSender("localhost", 55555);
+			var msg1 = new CoreOSC.OscMessage("/test/address", 23, "hello world");
 			sender.Send(msg1);
 
 			// Wait until callback processes its message
@@ -57,8 +57,8 @@ namespace SharpOSC.Tests
 
 			var l1 = new UDPListener(55555, cb);
 
-			var sender = new SharpOSC.UDPSender("localhost", 55555);
-			var msg1 = new SharpOSC.OscMessage("/test/address", 23, "hello world");
+			var sender = new CoreOSC.UDPSender("localhost", 55555);
+			var msg1 = new CoreOSC.OscMessage("/test/address", 23, "hello world");
 			sender.Send(msg1);
 
 			// Wait until callback processes its message

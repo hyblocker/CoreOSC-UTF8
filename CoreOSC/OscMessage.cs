@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SharpOSC
+namespace CoreOSC
 {
 	public class OscMessage : OscPacket
 	{
@@ -64,7 +64,7 @@ namespace SharpOSC
 						typeString += "t";
 						parts.Add(setULong((UInt64)arg));
 						break;
-					case "SharpOSC.Timetag":
+					case "CoreOSC.Timetag":
 						typeString += "t";
 						parts.Add(setULong(((Timetag)arg).Tag));
 						break;
@@ -80,7 +80,7 @@ namespace SharpOSC
 						}
 						break;
 
-					case "SharpOSC.Symbol":
+					case "CoreOSC.Symbol":
 						typeString += "S";
 						parts.Add(setString(((Symbol)arg).Value));
 						break;
@@ -89,11 +89,11 @@ namespace SharpOSC
 						typeString += "c";
 						parts.Add(setChar((char)arg));
 						break;
-					case "SharpOSC.RGBA":
+					case "CoreOSC.RGBA":
 						typeString += "r";
 						parts.Add(setRGBA((RGBA)arg));
 						break;
-					case "SharpOSC.Midi":
+					case "CoreOSC.Midi":
 						typeString += "m";
 						parts.Add(setMidi((Midi)arg));
 						break;

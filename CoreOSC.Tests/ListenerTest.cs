@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using System.Threading;
 
-namespace SharpOSC.Tests
+namespace CoreOSC.Tests
 {
 	[TestFixture]
 	class ListenerTest
@@ -58,9 +58,9 @@ namespace SharpOSC.Tests
 		{
 			var listener = new UDPListener(55555);
 
-			var sender = new SharpOSC.UDPSender("localhost", 55555);
+			var sender = new CoreOSC.UDPSender("localhost", 55555);
 
-			var msg = new SharpOSC.OscMessage("/test/", 23.42f);
+			var msg = new CoreOSC.OscMessage("/test/", 23.42f);
 
 			sender.Send(msg);
 
@@ -84,9 +84,9 @@ namespace SharpOSC.Tests
 		{
 			var listener = new UDPListener(55555);
 
-			var sender = new SharpOSC.UDPSender("localhost", 55555);
+			var sender = new CoreOSC.UDPSender("localhost", 55555);
 
-			var msg = new SharpOSC.OscMessage("/test/", 23.42f);
+			var msg = new CoreOSC.OscMessage("/test/", 23.42f);
 
 			for (int i = 0; i < 1000; i++)
 				sender.Send(msg);

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace SharpOSC.Tests
+namespace CoreOSC.Tests
 {
 	[TestFixture]
 	public class TimetagTest
