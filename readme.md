@@ -111,3 +111,30 @@ Example: Receiving a Message (Asynchronous)
 	}
 
 By giving UDPListener a callback you don't have to periodically check for incoming messages. The listener will simply invoke the callback whenever a message is received. You are free to implement any code you need inside the callback.
+
+Example: UDPDuplex (Asynchronous)
+-------------------------------------------
+
+	class Program
+	{
+		public void Main(string[] args)
+		{
+			// The cabllback function
+			HandleOscPacket callback = delegate(OscPacket packet)
+			{
+				var messageReceived = (OscMessage)packet;
+				Console.WriteLine("Received a message!");
+			};
+
+			var duplex = new UDPDuplex("remotehost.com",4444,55555, callback);
+
+			var message = new CoreOSC.OscMessage("/xremote");
+			duplex.Send(message);
+
+			Console.WriteLine("Press enter to stop");
+			Console.ReadLine();
+			duplex.Close();
+		}
+	}
+
+UDPDuplex works like UDPListener for recieving messages and work like UDPSender for sending messages. in this case the remote machine is remotehost.com listening on port 4444 and this script listens and sends messages from port 5555.
