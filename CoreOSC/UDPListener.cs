@@ -17,11 +17,11 @@ namespace CoreOSC
 		
 		object callbackLock;
 
-		UdpClient receivingUdpClient;
+		protected UdpClient receivingUdpClient;
 		IPEndPoint RemoteIpEndPoint;
 
-		HandleBytePacket BytePacketCallback = null;
-		HandleOscPacket OscPacketCallback = null;
+        protected HandleBytePacket BytePacketCallback = null;
+        protected HandleOscPacket OscPacketCallback = null;
 
 		Queue<byte[]> queue;
 		ManualResetEvent ClosingEvent;
