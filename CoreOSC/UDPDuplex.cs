@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Net.Sockets;
 using System.Net;
-using System.Threading;
 
 namespace CoreOSC
 {
@@ -12,9 +8,9 @@ namespace CoreOSC
         public int RemotePort { get; private set; }
         public string RemoteAddress { get; private set; }
 
-        IPEndPoint RemoteIpEndPoint2;
+        private IPEndPoint RemoteIpEndPoint2;
 
-        public UDPDuplex(string remoteAddress, int remotePort ,int port) : base(port)
+        public UDPDuplex(string remoteAddress, int remotePort, int port) : base(port)
         {
             RemotePort = remotePort;
             RemoteAddress = remoteAddress;
@@ -37,7 +33,7 @@ namespace CoreOSC
 
         public void Send(byte[] message)
         {
-		    receivingUdpClient.Send(message,message.Length,RemoteIpEndPoint2);
+            receivingUdpClient.Send(message, message.Length, RemoteIpEndPoint2);
         }
 
         public void Send(OscPacket packet)

@@ -1,57 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Sockets;
 using System.Net;
-using System.Threading;
+using System.Net.Sockets;
 
 namespace CoreOSC
 {
-	public class UDPSender
-	{
-		public int Port
-		{
-			get { return _port; }
-		}
-		int _port;
+    public class UDPSender
+    {
+        public int Port
+        {
+            get { return _port; }
+        }
 
-		public string Address
-		{
-			get { return _address; }
-		}
-		string _address;
+        private int _port;
 
-		IPEndPoint RemoteIpEndPoint;
-		Socket sock;
+        public string Address
+        {
+            get { return _address; }
+        }
 
-		public UDPSender(string address, int port)
-		{
-			_port = port;
-			_address = address;
+        private string _address;
 
-			sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        private IPEndPoint RemoteIpEndPoint;
+        private Socket sock;
 
-			var addresses = System.Net.Dns.GetHostAddresses(address);
-			if (addresses.Length == 0) throw new Exception("Unable to find IP address for " + address);
+        public UDPSender(string address, int port)
+        {
+            _port = port;
+            _address = address;
 
-			RemoteIpEndPoint = new IPEndPoint(addresses[0], port);
-		}
+            sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-		public void Send(byte[] message)
-		{
-			sock.SendTo(message, RemoteIpEndPoint);
-		}
+            var addresses = System.Net.Dns.GetHostAddresses(address);
+            if (addresses.Length == 0) throw new Exception("Unable to find IP address for " + address);
 
-		public void Send(OscPacket packet)
-		{
-			byte[] data = packet.GetBytes();
-			Send(data);
-		}
+            RemoteIpEndPoint = new IPEndPoint(addresses[0], port);
+        }
 
-		public void Close()
-		{
-			sock.Close();
-		}
-	}
+        public void Send(byte[] message)
+        {
+            sock.SendTo(message, RemoteIpEndPoint);
+        }
+
+        public void Send(OscPacket packet)
+        {
+            byte[] data = packet.GetBytes();
+            Send(data);
+        }
+
+        public void Close()
+        {
+            sock.Close();
+        }
+    }
 }
