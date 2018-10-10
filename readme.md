@@ -1,4 +1,4 @@
-CoreOSC - OSC Library for .NET CORE 2.0
+CoreOSC - OSC Library for .NET Standard 2.0
 ===================================
 
 
