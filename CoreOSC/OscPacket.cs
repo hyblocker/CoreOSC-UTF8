@@ -212,22 +212,17 @@ namespace CoreOSC
 
         private static string getAddress(byte[] msg, int index)
         {
-            int i = index;
             string address = "";
-            for (; i < msg.Length; i += 4)
-            {
-                if (msg[i] == ',')
-                {
-                    if (i == 0)
-                        return "";
+            char[] chars = Encoding.UTF8.GetChars(msg);
 
-                    address = Encoding.ASCII.GetString(msg.SubArray(index, i - 1));
+            for(int i=index; i < chars.Length; i++)
+            {
+                if(chars[i] == ',')
+                {
+                    address = string.Join("", chars.SubArray(index, i - index));
                     break;
                 }
             }
-
-            if (i >= msg.Length && address == null)
-                throw new Exception("no comma found");
 
             return address.Replace("\0", "");
         }
@@ -237,7 +232,7 @@ namespace CoreOSC
             int i = index + 4;
             char[] types = null;
 
-            for (; i < msg.Length; i += 4)
+            for (; i <= msg.Length; i += 4)
             {
                 if (msg[i - 1] == 0)
                 {
