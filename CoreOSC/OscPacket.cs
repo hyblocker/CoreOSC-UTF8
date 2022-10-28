@@ -77,7 +77,7 @@ namespace CoreOSC
                     case ('s'):
                         string stringVal = getString(msg, index);
                         arguments.Add(stringVal);
-                        index += stringVal.Length;
+                        index += Encoding.UTF8.GetBytes(stringVal).Length;
                         break;
 
                     case ('b'):
@@ -272,7 +272,7 @@ namespace CoreOSC
             {
                 if (msg[i - 1] == 0)
                 {
-                    output = Encoding.ASCII.GetString(msg.SubArray(index, i - index));
+                    output = Encoding.UTF8.GetString(msg.SubArray(index, i - index));
                     break;
                 }
             }
@@ -375,12 +375,9 @@ namespace CoreOSC
 
         protected static byte[] setString(string value)
         {
-            int len = value.Length + (4 - value.Length % 4);
-            if (len <= value.Length) len = len + 4;
+            var bytes = Encoding.UTF8.GetBytes(value);
 
-            byte[] msg = new byte[len];
-
-            var bytes = Encoding.ASCII.GetBytes(value);
+            byte[] msg = new byte[(bytes.Length / 4 + 1) * 4];
             bytes.CopyTo(msg, 0);
 
             return msg;
