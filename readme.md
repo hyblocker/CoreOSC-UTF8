@@ -70,71 +70,74 @@ This example sends an OSC message to the local machine on port 55555 containing 
 
 Example: Receiving a Message (Synchronous)
 ------------------------------------------
-
-	class Program
+´´´csharp
+class Program
+{
+	static void Main(string[] args)
 	{
-		static void Main(string[] args)
+		var listener = new UDPListener(55555);
+		OscMessage messageReceived = null;
+		while (messageReceived == null)
 		{
-			var listener = new UDPListener(55555);
-			OscMessage messageReceived = null;
-			while (messageReceived == null)
-			{
-				messageReceived = (OscMessage)listener.Receive();
-				Thread.Sleep(1);
-			}
-			Console.WriteLine("Received a message!");
+			messageReceived = (OscMessage)listener.Receive();
+			Thread.Sleep(1);
 		}
+		Console.WriteLine("Received a message!");
 	}
+}
+´´´	
 
 This shows a very simple way of waiting for incoming messages. The listener.Receive() method will check if the listener has received any new messages since it was last called. It will poll for a message every millisecond. If there is a new message that has not been returned it will assign messageReceived to point to that message. If no message has been received since the last call to Receive it will return null.
 
 Example: Receiving a Message (Asynchronous)
 -------------------------------------------
-
-	class Program
+```csharp
+class Program
+{
+	public void Main(string[] args)
 	{
-		public void Main(string[] args)
+		// The cabllback function
+		HandleOscPacket callback = delegate(OscPacket packet)
 		{
-			// The cabllback function
-			HandleOscPacket callback = delegate(OscPacket packet)
-			{
-				var messageReceived = (OscMessage)packet;
-				Console.WriteLine("Received a message!");
-			};
+			var messageReceived = (OscMessage)packet;
+			Console.WriteLine("Received a message!");
+		};
 
-			var listener = new UDPListener(55555, callback);
+		var listener = new UDPListener(55555, callback);
 
-			Console.WriteLine("Press enter to stop");
-			Console.ReadLine();
-			listener.Close();
-		}
+		Console.WriteLine("Press enter to stop");
+		Console.ReadLine();
+		listener.Close();
 	}
+}
+```
 
 By giving UDPListener a callback you don't have to periodically check for incoming messages. The listener will simply invoke the callback whenever a message is received. You are free to implement any code you need inside the callback.
 
 Example: UDPDuplex (Asynchronous)
 -------------------------------------------
-
-	class Program
+```csharp
+class Program
+{
+	public void Main(string[] args)
 	{
-		public void Main(string[] args)
+		// The cabllback function
+		HandleOscPacket callback = delegate(OscPacket packet)
 		{
-			// The cabllback function
-			HandleOscPacket callback = delegate(OscPacket packet)
-			{
-				var messageReceived = (OscMessage)packet;
-				Console.WriteLine("Received a message!");
-			};
+			var messageReceived = (OscMessage)packet;
+			Console.WriteLine("Received a message!");
+		};
 
-			var duplex = new UDPDuplex("remotehost.com",4444,55555, callback);
+		var duplex = new UDPDuplex("remotehost.com",4444,55555, callback);
 
-			var message = new CoreOSC.OscMessage("/xremote");
-			duplex.Send(message);
+		var message = new CoreOSC.OscMessage("/xremote");
+		duplex.Send(message);
 
-			Console.WriteLine("Press enter to stop");
-			Console.ReadLine();
-			duplex.Close();
-		}
+		Console.WriteLine("Press enter to stop");
+		Console.ReadLine();
+		duplex.Close();
 	}
+}
+```
 
 UDPDuplex works like UDPListener for recieving messages and work like UDPSender for sending messages. in this case the remote machine is remotehost.com listening on port 4444 and this script listens and sends messages from port 5555.
