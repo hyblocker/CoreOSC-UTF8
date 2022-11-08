@@ -55,16 +55,17 @@ To use the library add a reference to CoreOSC.dll in your .NET project. CoreOSC 
 
 Example: Sending a message
 --------------------------
-
-	class Program
+```cs
+class Program
+{
+	static void Main(string[] args)
 	{
-		static void Main(string[] args)
-		{
-			var message = new CoreOSC.OscMessage("/test/1", 23, 42.01f, "hello world");
-			var sender = new CoreOSC.UDPSender("127.0.0.1", 55555);
-			sender.Send(message);
-		}
+		var message = new CoreOSC.OscMessage("/test/1", 23, 42.01f, "hello world");
+		var sender = new CoreOSC.UDPSender("127.0.0.1", 55555);
+		sender.Send(message);
 	}
+}
+```
 
 This example sends an OSC message to the local machine on port 55555 containing 3 arguments: an integer with a value of 23, a floating point number with the value 42.01 and the string "hello world". If another program is listening to port 55555 it will receive the message and be able to use the data sent.
 
