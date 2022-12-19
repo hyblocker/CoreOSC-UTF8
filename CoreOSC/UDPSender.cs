@@ -33,7 +33,14 @@ namespace CoreOSC
             var addresses = System.Net.Dns.GetHostAddresses(address);
             if (addresses.Length == 0) throw new Exception("Unable to find IP address for " + address);
 
-            RemoteIpEndPoint = new IPEndPoint(addresses[0], port);
+            // Try all IP Addresses
+            for (int i = 0; i < addresses.Length; i++ ) {
+                if ( addresses[i].AddressFamily != AddressFamily.InterNetwork )
+                    continue;
+                RemoteIpEndPoint = new IPEndPoint(addresses[i], port);
+                return;
+            }
+            throw new Exception($"Found IP address for {address}, but it is not suitable for OSC!");
         }
 
         public void Send(byte[] message)
